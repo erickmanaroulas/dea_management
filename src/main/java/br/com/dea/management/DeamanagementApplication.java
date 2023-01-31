@@ -68,7 +68,7 @@ public class DeamanagementApplication implements CommandLineRunner {
         System.out.println("User email 1 name: " + loadedUser.getName());
 
         //Loading user by id
-        User loadedUserById = this.userService.findById(2L);
+        User loadedUserById = this.userService.findById(2);
         System.out.println("User id 1 name: " + loadedUserById.getName());
 
         //Updating user name 1 linkedin
