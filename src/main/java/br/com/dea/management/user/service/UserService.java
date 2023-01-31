@@ -20,14 +20,14 @@ public class UserService {
     }
 
     public User findUserByEmail(String email) {
-        Optional<User> user = this.userRepository.findByEmail(email);
+        return this.userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException(User.class, email));
+    }
 
-        if (user.isPresent()) {
-            return user.get();
-        }
+    public User findUserByLinkedin(String linkedin) {
+        return this.userRepository.findByLinkedin(linkedin).orElseThrow(() -> new NotFoundException(User.class, linkedin));
+    }
 
-        throw new NotFoundException(User.class, email);
-
-        //return user.orElseThrow(() -> new NotFoundException(User.class, email));
+    public User findById(long id) {
+        return this.userRepository.findById(id).orElseThrow(() -> new NotFoundException(User.class, id));
     }
 }
