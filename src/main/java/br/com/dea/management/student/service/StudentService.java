@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Service
@@ -19,6 +18,6 @@ public class StudentService {
     public List<Student> findAllStudents() { return this.studentRepository.findAll(); }
 
     public Page<Student> findAllStudentsPaginated(Integer page, Integer pageSize) {
-        return this.studentRepository.findAllPaginated((Pageable) PageRequest.of(page, pageSize));
+        return this.studentRepository.findAllPaginated(PageRequest.of(page, pageSize));
     }
 }

@@ -2,7 +2,6 @@ package br.com.dea.management.student.domain;
 
 import br.com.dea.management.user.domain.User;
 import jakarta.persistence.*;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 
