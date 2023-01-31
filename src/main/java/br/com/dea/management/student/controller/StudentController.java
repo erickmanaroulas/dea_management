@@ -10,23 +10,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/student")
 public class StudentController {
 
     @Autowired
     StudentService studentService;
 
-    @RequestMapping(value = "/student/all", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<Student> getStudentsAllRaw() {
         return this.studentService.findAllStudents();
     }
 
-    @RequestMapping(value = "/student/without-pagination", method = RequestMethod.GET)
+    @RequestMapping(value = "/without-pagination", method = RequestMethod.GET)
     public List<StudentDto> getStudentsWithOutPagination() {
         List<Student> students = this.studentService.findAllStudents();
         return StudentDto.fromStudents(students);
     }
 
-    @GetMapping("/student")
+    @GetMapping("/students")
     public Page<StudentDto> getStudents(@RequestParam Integer page,
                                         @RequestParam Integer pageSize) {
 
@@ -34,5 +35,10 @@ public class StudentController {
         Page<StudentDto> students = studentsPaged.map(student -> StudentDto.fromStudent(student));
         return students;
 
+    }
+
+    @GetMapping("/student")
+    public StudentDto getStudent(@RequestParam Integer id) {
+        return StudentDto.fromStudent(this.studentService.findStudentById(id.longValue()));
     }
 }
