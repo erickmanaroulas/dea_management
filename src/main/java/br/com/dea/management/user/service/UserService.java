@@ -1,8 +1,8 @@
-package br.com.dea.management.deamanagement.user.service;
+package br.com.dea.management.user.service;
 
-import br.com.dea.management.deamanagement.exceptions.NotFoundException;
-import br.com.dea.management.deamanagement.user.domain.User;
-import br.com.dea.management.deamanagement.user.repository.UserRepository;
+import br.com.dea.management.exceptions.NotFoundException;
+import br.com.dea.management.user.domain.User;
+import br.com.dea.management.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +22,12 @@ public class UserService {
     public User findUserByEmail(String email) {
         Optional<User> user = this.userRepository.findByEmail(email);
 
-        return user.orElseThrow(() -> new NotFoundException(User.class, email));
+        if (user.isPresent()) {
+            return user.get();
+        }
+
+        throw new NotFoundException(User.class, email);
+
+        //return user.orElseThrow(() -> new NotFoundException(User.class, email));
     }
 }

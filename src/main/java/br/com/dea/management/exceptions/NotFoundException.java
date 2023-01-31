@@ -1,4 +1,4 @@
-package br.com.dea.management.deamanagement.exceptions;
+package br.com.dea.management.exceptions;
 
 import java.util.List;
 

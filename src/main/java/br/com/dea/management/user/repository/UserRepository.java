@@ -1,6 +1,6 @@
-package br.com.dea.management.deamanagement.user.repository;
+package br.com.dea.management.user.repository;
 
-import br.com.dea.management.deamanagement.user.domain.User;
+import br.com.dea.management.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

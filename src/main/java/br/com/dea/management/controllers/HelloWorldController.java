@@ -1,4 +1,4 @@
-package br.com.dea.management.deamanagement.controllers;
+package br.com.dea.management.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;

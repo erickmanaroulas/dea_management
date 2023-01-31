@@ -1,8 +1,8 @@
-package br.com.dea.management.deamanagement;
+package br.com.dea.management;
 
-import br.com.dea.management.deamanagement.user.domain.User;
-import br.com.dea.management.deamanagement.user.repository.UserRepository;
-import br.com.dea.management.deamanagement.user.service.UserService;
+import br.com.dea.management.user.domain.User;
+import br.com.dea.management.user.repository.UserRepository;
+import br.com.dea.management.user.service.UserService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;

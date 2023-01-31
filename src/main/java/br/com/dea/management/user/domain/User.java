@@ -1,4 +1,4 @@
-package br.com.dea.management.deamanagement.user.domain;
+package br.com.dea.management.user.domain;
 
 import jakarta.persistence.*;
 
