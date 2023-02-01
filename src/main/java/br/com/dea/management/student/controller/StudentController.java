@@ -3,6 +3,8 @@ package br.com.dea.management.student.controller;
 import br.com.dea.management.student.domain.Student;
 import br.com.dea.management.student.dto.StudentDto;
 import br.com.dea.management.student.service.StudentService;
+import br.com.dea.management.user.domain.User;
+import br.com.dea.management.user.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -21,13 +23,13 @@ public class StudentController {
         return this.studentService.findAllStudents();
     }
 
-    @RequestMapping(value = "/without-pagination", method = RequestMethod.GET)
+    @RequestMapping(value = "/all-without-pagination", method = RequestMethod.GET)
     public List<StudentDto> getStudentsWithOutPagination() {
         List<Student> students = this.studentService.findAllStudents();
         return StudentDto.fromStudents(students);
     }
 
-    @GetMapping("/students")
+    @GetMapping("/all-dto")
     public Page<StudentDto> getStudents(@RequestParam Integer page,
                                         @RequestParam Integer pageSize) {
 
@@ -37,8 +39,8 @@ public class StudentController {
 
     }
 
-    @GetMapping("/student")
-    public StudentDto getStudent(@RequestParam Integer id) {
+    @GetMapping("/{id}")
+    public StudentDto getStudent(@PathVariable("id") Integer id) {
         return StudentDto.fromStudent(this.studentService.findStudentById(id.longValue()));
     }
 }

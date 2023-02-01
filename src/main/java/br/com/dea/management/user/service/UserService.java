@@ -33,7 +33,7 @@ public class UserService {
         return this.userRepository.findByLinkedin(linkedin).orElseThrow(() -> new NotFoundException(User.class, linkedin));
     }
 
-    public User findById(int id) {
+    public User findUserById(int id) {
         return this.userRepository.findById(id).orElseThrow(() -> new NotFoundException(User.class, id));
     }
 }
