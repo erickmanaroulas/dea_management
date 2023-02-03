@@ -8,15 +8,12 @@ import br.com.dea.management.user.repository.UserRepository;
 import br.com.dea.management.user.service.UserService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 
 @SpringBootApplication
 public class DeamanagementApplication implements CommandLineRunner {
