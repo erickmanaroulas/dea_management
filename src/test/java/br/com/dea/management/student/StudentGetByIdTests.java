@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Slf4j
 public class StudentGetByIdTests {
-
+    private final String route = "/student/";
     @Autowired
     private MockMvc mockMvc;
 
@@ -53,7 +53,7 @@ public class StudentGetByIdTests {
 
         Student student = this.studentRepository.findAll().get(0);
 
-        mockMvc.perform(get("/student/" + student.getId()))
+        mockMvc.perform(get(route + student.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.name", is(student.getUser().getName())))
@@ -67,7 +67,7 @@ public class StudentGetByIdTests {
     @Test
     void whenRequestingByIdAndIdIsNotANumber_thenReturnTheBadRequestError() throws Exception {
 
-        mockMvc.perform(get("/student/xx"))
+        mockMvc.perform(get(route + "xx"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message").exists())
@@ -78,7 +78,7 @@ public class StudentGetByIdTests {
     @Test
     void whenRequestingAnNonExistentStudentById_thenReturnTheNotFoundError() throws Exception {
 
-        mockMvc.perform(get("/student/5000"))
+        mockMvc.perform(get(route + "5000"))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message").exists())
