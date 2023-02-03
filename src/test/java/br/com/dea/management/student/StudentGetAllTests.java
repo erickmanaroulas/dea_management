@@ -50,11 +50,11 @@ public class StudentGetAllTests {
         this.studentRepository.deleteAll();
         this.createFakeStudents(100);
 
-        mockMvc.perform(get("/student?page=0&pageSize=4"))
+        mockMvc.perform(get("/student/all-dto?page=0&pageSize=12"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.content").isArray())
-                .andExpect(jsonPath("$.content", hasSize(4)))
+                .andExpect(jsonPath("$.content", hasSize(12)))
                 .andExpect(jsonPath("$.content[0].name", is("name 0")))
                 .andExpect(jsonPath("$.content[0].email", is("email 0")))
                 .andExpect(jsonPath("$.content[0].linkedin", is("linkedin 0")))
@@ -65,22 +65,22 @@ public class StudentGetAllTests {
                 .andExpect(jsonPath("$.content[1].linkedin", is("linkedin 1")))
                 .andExpect(jsonPath("$.content[1].university", is("UNI 1")))
                 .andExpect(jsonPath("$.content[1].graduation", is("Grad 1")))
-                .andExpect(jsonPath("$.content[2].name", is("name 10")))
-                .andExpect(jsonPath("$.content[2].email", is("email 10")))
-                .andExpect(jsonPath("$.content[2].linkedin", is("linkedin 10")))
-                .andExpect(jsonPath("$.content[2].university", is("UNI 10")))
-                .andExpect(jsonPath("$.content[2].graduation", is("Grad 10")))
-                .andExpect(jsonPath("$.content[3].name", is("name 11")))
-                .andExpect(jsonPath("$.content[3].email", is("email 11")))
-                .andExpect(jsonPath("$.content[3].linkedin", is("linkedin 11")))
-                .andExpect(jsonPath("$.content[3].university", is("UNI 11")))
-                .andExpect(jsonPath("$.content[3].graduation", is("Grad 11")));
+                .andExpect(jsonPath("$.content[10].name", is("name 10")))
+                .andExpect(jsonPath("$.content[10].email", is("email 10")))
+                .andExpect(jsonPath("$.content[10].linkedin", is("linkedin 10")))
+                .andExpect(jsonPath("$.content[10].university", is("UNI 10")))
+                .andExpect(jsonPath("$.content[10].graduation", is("Grad 10")))
+                .andExpect(jsonPath("$.content[11].name", is("name 11")))
+                .andExpect(jsonPath("$.content[11].email", is("email 11")))
+                .andExpect(jsonPath("$.content[11].linkedin", is("linkedin 11")))
+                .andExpect(jsonPath("$.content[11].university", is("UNI 11")))
+                .andExpect(jsonPath("$.content[11].graduation", is("Grad 11")));
 
     }
 
     @Test
     void whenRequestingStudentListAndPageQueryParamIsInvalid_thenReturnBadRequestError() throws Exception {
-        mockMvc.perform(get("/student?page=xx&pageSize=4"))
+        mockMvc.perform(get("/student/all-dto?page=xx&pageSize=4"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message").exists())
@@ -90,7 +90,7 @@ public class StudentGetAllTests {
 
     @Test
     void whenRequestingStudentListAndPageQueryParamIsMissing_thenReturnBadRequestError() throws Exception {
-        mockMvc.perform(get("/student?pageSize=4"))
+        mockMvc.perform(get("/student/all-dto?pageSize=4"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message").exists())
@@ -100,7 +100,7 @@ public class StudentGetAllTests {
 
     @Test
     void whenRequestingStudentListAndPageSizeQueryParamIsInvalid_thenReturnBadRequestError() throws Exception {
-        mockMvc.perform(get("/student?pageSize=xx&page=4"))
+        mockMvc.perform(get("/student/all-dto?pageSize=xx&page=4"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message").exists())
@@ -110,7 +110,7 @@ public class StudentGetAllTests {
 
     @Test
     void whenRequestingStudentListAndPageSizeQueryParamIsMissing_thenReturnBadRequestError() throws Exception {
-        mockMvc.perform(get("/student?page=0"))
+        mockMvc.perform(get("/student/all-dto?page=0"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message").exists())
