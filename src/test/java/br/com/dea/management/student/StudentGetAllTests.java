@@ -29,7 +29,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Slf4j
 public class StudentGetAllTests {
 
-    @Autowired
+    private final String route = "/student/all";
+
+   @Autowired
     private MockMvc mockMvc;
 
     @Autowired
@@ -50,7 +52,7 @@ public class StudentGetAllTests {
         this.studentRepository.deleteAll();
         this.createFakeStudents(100);
 
-        mockMvc.perform(get("/student/all-dto?page=0&pageSize=12"))
+        mockMvc.perform(get(route + "?page=0&pageSize=12"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.content").isArray())
@@ -80,7 +82,7 @@ public class StudentGetAllTests {
 
     @Test
     void whenRequestingStudentListAndPageQueryParamIsInvalid_thenReturnBadRequestError() throws Exception {
-        mockMvc.perform(get("/student/all-dto?page=xx&pageSize=4"))
+        mockMvc.perform(get(route + "?page=xx&pageSize=4"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message").exists())
@@ -90,7 +92,7 @@ public class StudentGetAllTests {
 
     @Test
     void whenRequestingStudentListAndPageQueryParamIsMissing_thenReturnBadRequestError() throws Exception {
-        mockMvc.perform(get("/student/all-dto?pageSize=4"))
+        mockMvc.perform(get(route + "?pageSize=4"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message").exists())
@@ -100,7 +102,7 @@ public class StudentGetAllTests {
 
     @Test
     void whenRequestingStudentListAndPageSizeQueryParamIsInvalid_thenReturnBadRequestError() throws Exception {
-        mockMvc.perform(get("/student/all-dto?pageSize=xx&page=4"))
+        mockMvc.perform(get(route + "?pageSize=xx&page=4"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message").exists())
@@ -110,7 +112,7 @@ public class StudentGetAllTests {
 
     @Test
     void whenRequestingStudentListAndPageSizeQueryParamIsMissing_thenReturnBadRequestError() throws Exception {
-        mockMvc.perform(get("/student/all-dto?page=0"))
+        mockMvc.perform(get(route + "?page=0"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message").exists())

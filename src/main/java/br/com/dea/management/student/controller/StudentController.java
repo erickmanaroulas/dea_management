@@ -20,18 +20,13 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public List<Student> getStudentsAllRaw() {
-        return this.studentService.findAllStudents();
-    }
-
     @RequestMapping(value = "/all-without-pagination", method = RequestMethod.GET)
     public List<StudentDto> getStudentsWithOutPagination() {
         List<Student> students = this.studentService.findAllStudents();
         return StudentDto.fromStudents(students);
     }
 
-    @GetMapping("/all-dto")
+    @GetMapping("/all")
     public Page<StudentDto> getStudents(@RequestParam Integer page,
                                         @RequestParam Integer pageSize) {
         log.info(String.format("Fetching students : page : %s : pageSize", page, pageSize));
