@@ -36,9 +36,6 @@ public class UserGetAllTests {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private StudentRepository studentRepository;
-
     @BeforeEach
     void beforeEach() {
         log.info("Before each test in " + UserGetAllTests.class.getSimpleName());
@@ -47,7 +44,7 @@ public class UserGetAllTests {
     @BeforeAll
     void beforeSuiteTest() {
         log.info("Before all tests in " + UserGetAllTests.class.getSimpleName());
-//        this.userRepository.deleteAll();
+        this.userRepository.deleteAll();
     }
 
     @AfterAll
@@ -57,7 +54,7 @@ public class UserGetAllTests {
     }
 
     @Test
-    void whenRequestingStudentList_thenReturnListOfStudentPaginatedSuccessfully() throws Exception {
+    void whenRequestingUserList_thenReturnListOfUsersPaginatedSuccessfully() throws Exception {
         this.createFakeUsers(100);
 
         mockMvc.perform(get(route + "?page=0&pageSize=12"))
