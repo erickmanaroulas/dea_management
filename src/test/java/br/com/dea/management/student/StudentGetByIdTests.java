@@ -4,10 +4,7 @@ import br.com.dea.management.student.domain.Student;
 import br.com.dea.management.student.repository.StudentRepository;
 import br.com.dea.management.user.domain.User;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -44,6 +41,12 @@ public class StudentGetByIdTests {
     @BeforeAll
     void beforeSuiteTest() {
         log.info("Before all tests in " + StudentGetByIdTests.class.getSimpleName());
+    }
+
+    @AfterAll
+    void afterSuiteTest() {
+        log.info("After all tests in " + StudentGetAllTests.class.getSimpleName());
+        this.studentRepository.deleteAll();
     }
 
     @Test

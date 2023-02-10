@@ -36,6 +36,9 @@ public class UserGetAllTests {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private StudentRepository studentRepository;
+
     @BeforeEach
     void beforeEach() {
         log.info("Before each test in " + UserGetAllTests.class.getSimpleName());
@@ -44,7 +47,7 @@ public class UserGetAllTests {
     @BeforeAll
     void beforeSuiteTest() {
         log.info("Before all tests in " + UserGetAllTests.class.getSimpleName());
-        this.userRepository.deleteAll();
+//        this.userRepository.deleteAll();
     }
 
     @AfterAll
@@ -68,12 +71,12 @@ public class UserGetAllTests {
                 .andExpect(jsonPath("$.content[1].name", is("name 1")))
                 .andExpect(jsonPath("$.content[1].email", is("email 1")))
                 .andExpect(jsonPath("$.content[1].linkedin", is("linkedin 1")))
-                .andExpect(jsonPath("$.content[10].name", is("name 10")))
-                .andExpect(jsonPath("$.content[10].email", is("email 10")))
-                .andExpect(jsonPath("$.content[10].linkedin", is("linkedin 10")))
-                .andExpect(jsonPath("$.content[11].name", is("name 11")))
-                .andExpect(jsonPath("$.content[11].email", is("email 11")))
-                .andExpect(jsonPath("$.content[11].linkedin", is("linkedin 11")));
+                .andExpect(jsonPath("$.content[2].name", is("name 10")))
+                .andExpect(jsonPath("$.content[2].email", is("email 10")))
+                .andExpect(jsonPath("$.content[2].linkedin", is("linkedin 10")))
+                .andExpect(jsonPath("$.content[3].name", is("name 11")))
+                .andExpect(jsonPath("$.content[3].email", is("email 11")))
+                .andExpect(jsonPath("$.content[3].linkedin", is("linkedin 11")));
     }
 
     @Test
