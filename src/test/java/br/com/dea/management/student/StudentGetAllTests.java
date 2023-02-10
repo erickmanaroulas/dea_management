@@ -71,17 +71,16 @@ public class StudentGetAllTests {
                 .andExpect(jsonPath("$.content[1].linkedin", is("linkedin 1")))
                 .andExpect(jsonPath("$.content[1].university", is("UNI 1")))
                 .andExpect(jsonPath("$.content[1].graduation", is("Grad 1")))
-                .andExpect(jsonPath("$.content[10].name", is("name 10")))
-                .andExpect(jsonPath("$.content[10].email", is("email 10")))
-                .andExpect(jsonPath("$.content[10].linkedin", is("linkedin 10")))
-                .andExpect(jsonPath("$.content[10].university", is("UNI 10")))
-                .andExpect(jsonPath("$.content[10].graduation", is("Grad 10")))
-                .andExpect(jsonPath("$.content[11].name", is("name 11")))
-                .andExpect(jsonPath("$.content[11].email", is("email 11")))
-                .andExpect(jsonPath("$.content[11].linkedin", is("linkedin 11")))
-                .andExpect(jsonPath("$.content[11].university", is("UNI 11")))
-                .andExpect(jsonPath("$.content[11].graduation", is("Grad 11")));
-
+                .andExpect(jsonPath("$.content[2].name", is("name 10")))
+                .andExpect(jsonPath("$.content[2].email", is("email 10")))
+                .andExpect(jsonPath("$.content[2].linkedin", is("linkedin 10")))
+                .andExpect(jsonPath("$.content[2].university", is("UNI 10")))
+                .andExpect(jsonPath("$.content[2].graduation", is("Grad 10")))
+                .andExpect(jsonPath("$.content[3].name", is("name 11")))
+                .andExpect(jsonPath("$.content[3].email", is("email 11")))
+                .andExpect(jsonPath("$.content[3].linkedin", is("linkedin 11")))
+                .andExpect(jsonPath("$.content[3].university", is("UNI 11")))
+                .andExpect(jsonPath("$.content[3].graduation", is("Grad 11")));
     }
 
     @Test
