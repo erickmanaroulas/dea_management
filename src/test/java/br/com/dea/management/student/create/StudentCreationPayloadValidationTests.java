@@ -51,7 +51,7 @@ class StudentCreationPayloadValidationTests {
     void whenPayloadHasEnrollmentDateInTheFuture_thenReturn400AndTheErrors() throws Exception {
         String payload = "{" +
                 "\"name\": \"name\"," +
-                "\"email\": \"email\"," +
+                "\"email\": \"email@email.com\"," +
                 "\"linkedin\": \"linkedin\"," +
                 "\"university\": \"university\"," +
                 "\"graduation\": \"graduation\"," +

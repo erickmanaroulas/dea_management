@@ -63,7 +63,7 @@ class StudentUpdatePayloadValidationTests {
 
         String payload = "{" +
                 "\"name\": \"name\"," +
-                "\"email\": \"email\"," +
+                "\"email\": \"email@email.com\"," +
                 "\"linkedin\": \"linkedin\"," +
                 "\"university\": \"university\"," +
                 "\"graduation\": \"graduation\"," +
@@ -88,7 +88,7 @@ class StudentUpdatePayloadValidationTests {
 
         String payload = "{" +
                 "\"name\": \"name\"," +
-                "\"email\": \"email\"," +
+                "\"email\": \"email@email.com\"," +
                 "\"linkedin\": \"linkedin\"," +
                 "\"university\": \"university\"," +
                 "\"graduation\": \"graduation\"," +
