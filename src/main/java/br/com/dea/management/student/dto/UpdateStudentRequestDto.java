@@ -25,6 +25,6 @@ public class UpdateStudentRequestDto {
     private String linkedin;
     private String university;
     private String graduation;
-    private LocalDate finishDate;
     private LocalDate enrollmentDate;
+    private LocalDate finishDate;
 }

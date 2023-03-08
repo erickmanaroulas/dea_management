@@ -96,7 +96,7 @@ public class StudentController {
             @ApiResponse(responseCode = "400", description = "Payload not valid"),
             @ApiResponse(responseCode = "500", description = "Error creating student"),
     })
-    @PostMapping("/")
+    @PostMapping({"/", ""})
     public void createStudent(@Valid @RequestBody CreateStudentRequestDto createStudentRequestDto) {
         log.info(String.format("Creating Student : Payload : %s", createStudentRequestDto));
 

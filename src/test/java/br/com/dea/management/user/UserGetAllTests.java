@@ -1,6 +1,6 @@
 package br.com.dea.management.user;
 
-import br.com.dea.management.student.StudentGetAllTests;
+import br.com.dea.management.student.get.StudentGetAllTests;
 import br.com.dea.management.student.domain.Student;
 import br.com.dea.management.student.repository.StudentRepository;
 import br.com.dea.management.user.domain.User;
