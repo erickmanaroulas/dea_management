@@ -1,6 +1,7 @@
 package br.com.dea.management.student.dto;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -25,6 +26,8 @@ public class CreateStudentRequestDto {
     private String linkedin;
     private String university;
     private String graduation;
+
+    @Past(message = "Enrollment date should be in the past")
     private LocalDate enrollmentDate;
     private LocalDate finishDate;
 }

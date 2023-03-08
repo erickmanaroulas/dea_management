@@ -45,7 +45,29 @@ class StudentCreationPayloadValidationTests {
                 .andExpect(jsonPath("$.details[*].errorMessage", hasItem("Email could not be null")))
                 .andExpect(jsonPath("$.details[*].field", hasItem("password")))
                 .andExpect(jsonPath("$.details[*].errorMessage", hasItem("Password could not be null")));
+    }
 
+    @Test
+    void whenPayloadHasEnrollmentDateInTheFuture_thenReturn400AndTheErrors() throws Exception {
+        String payload = "{" +
+                "\"name\": \"name\"," +
+                "\"email\": \"email\"," +
+                "\"linkedin\": \"linkedin\"," +
+                "\"university\": \"university\"," +
+                "\"graduation\": \"graduation\"," +
+                "\"password\": \"password\"," +
+                "\"enrollmentDate\": \"2024-02-10\"," +
+                "\"finishDate\": \"2023-02-27\"" +
+                "}";
+        mockMvc.perform(post("/student")
+                        .contentType(APPLICATION_JSON_UTF8).content(payload))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").exists())
+                .andExpect(jsonPath("$.details").isArray())
+                .andExpect(jsonPath("$.details", hasSize(1)))
+                .andExpect(jsonPath("$.details[*].field", hasItem("enrollmentDate")))
+                .andExpect(jsonPath("$.details[*].errorMessage", hasItem("Enrollment date should be in the past")));
     }
 
 }

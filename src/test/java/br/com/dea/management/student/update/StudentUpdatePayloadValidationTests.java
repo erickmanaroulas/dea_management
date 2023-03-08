@@ -1,5 +1,7 @@
 package br.com.dea.management.student.update;
 
+import br.com.dea.management.student.StudentTestUtils;
+import br.com.dea.management.student.domain.Student;
 import br.com.dea.management.student.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +17,7 @@ import java.nio.charset.Charset;
 
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -29,6 +32,9 @@ class StudentUpdatePayloadValidationTests {
 
     @Autowired
     private StudentRepository studentRepository;
+
+    @Autowired
+    private StudentTestUtils studentTestUtils;
 
     public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
@@ -72,6 +78,33 @@ class StudentUpdatePayloadValidationTests {
                 .andExpect(jsonPath("$.message").exists())
                 .andExpect(jsonPath("$.details").isArray())
                 .andExpect(jsonPath("$.details", hasSize(1)));
+    }
+
+    @Test
+    void whenPayloadHasEnrollmentDateInTheFuture_thenReturn400AndTheErrors() throws Exception {
+        this.studentRepository.deleteAll();
+        this.studentTestUtils.createFakeStudents(1);
+        Student studentBase = this.studentRepository.findAll().get(0);
+
+        String payload = "{" +
+                "\"name\": \"name\"," +
+                "\"email\": \"email\"," +
+                "\"linkedin\": \"linkedin\"," +
+                "\"university\": \"university\"," +
+                "\"graduation\": \"graduation\"," +
+                "\"password\": \"password\"," +
+                "\"enrollmentDate\": \"2024-02-10\"," +
+                "\"finishDate\": \"2023-02-27\"" +
+                "}";
+        mockMvc.perform(put("/student/" + studentBase.getId())
+                        .contentType(APPLICATION_JSON_UTF8).content(payload))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").exists())
+                .andExpect(jsonPath("$.details").isArray())
+                .andExpect(jsonPath("$.details", hasSize(1)))
+                .andExpect(jsonPath("$.details[*].field", hasItem("enrollmentDate")))
+                .andExpect(jsonPath("$.details[*].errorMessage", hasItem("Enrollment date should be in the past")));
     }
 
 }
