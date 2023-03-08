@@ -107,4 +107,32 @@ class StudentUpdatePayloadValidationTests {
                 .andExpect(jsonPath("$.details[*].errorMessage", hasItem("Enrollment date should be in the past")));
     }
 
+    @Test
+    void whenPayloadHasInvalidEmail_thenReturn400AndTheErrors() throws Exception {
+        this.studentRepository.deleteAll();
+        this.studentTestUtils.createFakeStudents(1);
+        Student studentBase = this.studentRepository.findAll().get(0);
+
+        String payload = "{" +
+                "\"name\": \"name\"," +
+                "\"email\": \"email\"," +
+                "\"linkedin\": \"linkedin\"," +
+                "\"university\": \"university\"," +
+                "\"graduation\": \"graduation\"," +
+                "\"password\": \"password\"," +
+                "\"enrollmentDate\": \"2020-02-10\"," +
+                "\"finishDate\": \"2023-02-27\"" +
+                "}";
+
+        mockMvc.perform(put("/student/" + studentBase.getId())
+                        .contentType(APPLICATION_JSON_UTF8).content(payload))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").exists())
+                .andExpect(jsonPath("$.details").isArray())
+                .andExpect(jsonPath("$.details", hasSize(1)))
+                .andExpect(jsonPath("$.details[*].field", hasItem("email")))
+                .andExpect(jsonPath("$.details[*].errorMessage", hasItem("Email should be valid")));
+    }
+
 }
