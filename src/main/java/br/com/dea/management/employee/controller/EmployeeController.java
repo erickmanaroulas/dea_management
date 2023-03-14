@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @Tag(name = "Employee", description = "The Employee API")
+@RequestMapping("/employee")
 public class EmployeeController {
 
     @Autowired
@@ -26,7 +27,7 @@ public class EmployeeController {
             @ApiResponse(responseCode = "400", description = "Page or Page Size params not valid"),
             @ApiResponse(responseCode = "500", description = "Error fetching employee list"),
     })
-    @GetMapping("/employee")
+    @GetMapping({"/", ""})
     public Page<EmployeeDto> getEmployees(@RequestParam(required = true) Integer page,
                                           @RequestParam(required = true) Integer pageSize) {
 
@@ -48,7 +49,7 @@ public class EmployeeController {
             @ApiResponse(responseCode = "404", description = "Employee Not found"),
             @ApiResponse(responseCode = "500", description = "Error fetching employee list"),
     })
-    @GetMapping("/employee/{id}")
+    @GetMapping("/{id}")
     public EmployeeDto getEmployees(@PathVariable Long id) {
 
         log.info(String.format("Fetching employee by id : Id : %s", id));
@@ -61,14 +62,14 @@ public class EmployeeController {
 
     }
 
-    @Operation(summary = "Delete a Employee")
+    @Operation(summary = "Delete an Employee")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation"),
             @ApiResponse(responseCode = "400", description = "Payload not valid"),
             @ApiResponse(responseCode = "404", description = "Employee not found"),
             @ApiResponse(responseCode = "500", description = "Error deleting employee"),
     })
-    @DeleteMapping("/employee/{employeeId}")
+    @DeleteMapping("/{employeeId}")
     public void deleteEmployee(@PathVariable Long employeeId) {
         log.info(String.format("Removing Employee : Id : %s", employeeId));
 
@@ -76,5 +77,4 @@ public class EmployeeController {
 
         log.info(String.format("Employee removed successfully : id : %s", employeeId));
     }
-
 }
