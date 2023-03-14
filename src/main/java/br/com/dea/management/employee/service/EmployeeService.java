@@ -1,8 +1,13 @@
 package br.com.dea.management.employee.service;
 
 import br.com.dea.management.employee.domain.Employee;
+import br.com.dea.management.employee.dto.CreateEmployeeRequestDto;
 import br.com.dea.management.employee.repository.EmployeeRepository;
 import br.com.dea.management.exceptions.NotFoundException;
+import br.com.dea.management.position.domain.Position;
+import br.com.dea.management.student.domain.Student;
+import br.com.dea.management.student.dto.CreateStudentRequestDto;
+import br.com.dea.management.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,4 +39,25 @@ public class EmployeeService {
         this.employeeRepository.delete(employee);
     }
 
+    public Employee createEmployee(CreateEmployeeRequestDto createEmployeeRequestDto) {
+        User user = User.builder()
+                .name(createEmployeeRequestDto.getName())
+                .email(createEmployeeRequestDto.getEmail())
+                .password(createEmployeeRequestDto.getPassword())
+                .linkedin(createEmployeeRequestDto.getLinkedin())
+                .build();
+
+        Position position = Position.builder()
+                .description(createEmployeeRequestDto.getPositionDescription())
+                .seniority(createEmployeeRequestDto.getPositionSeniority())
+                .build();
+
+        Employee employee = Employee.builder()
+                .user(user)
+                .position(position)
+                .employeeType(createEmployeeRequestDto.getEmployeeType())
+                .build();
+
+        return this.employeeRepository.save(employee);
+    }
 }

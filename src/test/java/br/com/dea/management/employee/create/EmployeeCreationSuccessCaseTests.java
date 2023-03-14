@@ -47,10 +47,8 @@ class EmployeeCreationSuccessCaseTests {
                 "\"linkedin\": \"linkedin\"," +
                 "\"password\": \"password\"," +
                 "\"employeeType\": \"RESIDENT\"," +
-                "\"position\": {" +
-                    "\"id\": \"0\"," +
-                    "\"description\": \"resident developer\"," +
-                    "\"seniority\": \"resident\" }" +
+                "\"positionDescription\": \"resident developer\"," +
+                "\"positionSeniority\": \"resident\"" +
                 "}";
         mockMvc.perform(post("/employee")
                         .contentType(APPLICATION_JSON_UTF8).content(payload))
