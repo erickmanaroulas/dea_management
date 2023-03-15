@@ -4,6 +4,7 @@ import br.com.dea.management.employee.EmployeeType;
 import br.com.dea.management.employee.domain.Employee;
 import br.com.dea.management.employee.repository.EmployeeRepository;
 import br.com.dea.management.position.domain.Position;
+import br.com.dea.management.position.repository.PositionRepository;
 import br.com.dea.management.student.domain.Student;
 import br.com.dea.management.student.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
@@ -34,12 +35,25 @@ class EmployeeCreationSuccessCaseTests {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Autowired
+    private PositionRepository positionRepository;
+
     public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
 
     @Test
-    void whenRequestingStudentCreationWithAValidPayload_thenCreateAStudentSuccessfully() throws Exception {
+    void whenRequestingEmployeeCreationWithAValidPayload_thenCreateAnEmployeeSuccessfully() throws Exception {
         this.employeeRepository.deleteAll();
+        this.positionRepository.deleteAll();
+
+        Position positionTest = Position.builder()
+                .description("resident developer")
+                .seniority("resident")
+                .build();
+
+        this.positionRepository.save(positionTest);
+
+        String positionId = this.positionRepository.findAll().get(0).getId().toString();
 
         String payload = "{" +
                 "\"name\": \"name\"," +
@@ -47,8 +61,7 @@ class EmployeeCreationSuccessCaseTests {
                 "\"linkedin\": \"linkedin\"," +
                 "\"password\": \"password\"," +
                 "\"employeeType\": \"RESIDENT\"," +
-                "\"positionDescription\": \"resident developer\"," +
-                "\"positionSeniority\": \"resident\"" +
+                "\"position\": \"" + positionId + "\"" +
                 "}";
         mockMvc.perform(post("/employee")
                         .contentType(APPLICATION_JSON_UTF8).content(payload))
@@ -63,11 +76,9 @@ class EmployeeCreationSuccessCaseTests {
         assertThat(employee.getEmployeeType()).isEqualTo(EmployeeType.RESIDENT);
 
         Position positionSut = employee.getPosition();
-        Position positionTest = new Position(0L, "resident developer", "resident");
 
         assertThat(positionSut.getId()).isEqualTo(positionTest.getId());
         assertThat(positionSut.getDescription()).isEqualTo(positionTest.getDescription());
         assertThat(positionSut.getSeniority()).isEqualTo(positionTest.getSeniority());
     }
-
 }

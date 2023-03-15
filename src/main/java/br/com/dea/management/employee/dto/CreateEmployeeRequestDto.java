@@ -32,11 +32,6 @@ public class CreateEmployeeRequestDto {
     @NotNull(message = "Employee Type could not be null")
     private EmployeeType employeeType;
 
-    @NotNull(message = "PositionDescription could not be null")
-    private String positionDescription;
-
-    @NotNull(message = "PositionSeniority could not be null")
-    private String positionSeniority;
-
-    private Position position;
+    @NotNull(message = "Position could not be null")
+    private Long position;
 }
