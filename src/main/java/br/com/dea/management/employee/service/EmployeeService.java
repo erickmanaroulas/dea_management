@@ -5,6 +5,7 @@ import br.com.dea.management.employee.dto.CreateEmployeeRequestDto;
 import br.com.dea.management.employee.repository.EmployeeRepository;
 import br.com.dea.management.exceptions.NotFoundException;
 import br.com.dea.management.position.domain.Position;
+import br.com.dea.management.position.repository.PositionRepository;
 import br.com.dea.management.student.domain.Student;
 import br.com.dea.management.student.dto.CreateStudentRequestDto;
 import br.com.dea.management.user.domain.User;
@@ -21,6 +22,9 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private PositionRepository positionRepository;
 
     public List<Employee> findAllEmployees() {
         return this.employeeRepository.findAll();
@@ -40,16 +44,14 @@ public class EmployeeService {
     }
 
     public Employee createEmployee(CreateEmployeeRequestDto createEmployeeRequestDto) {
+        Position position = this.positionRepository.findById(createEmployeeRequestDto.getPosition())
+                .orElseThrow(() -> new NotFoundException(Position.class, createEmployeeRequestDto.getPosition()));
+
         User user = User.builder()
                 .name(createEmployeeRequestDto.getName())
                 .email(createEmployeeRequestDto.getEmail())
                 .password(createEmployeeRequestDto.getPassword())
                 .linkedin(createEmployeeRequestDto.getLinkedin())
-                .build();
-
-        Position position = Position.builder()
-                .description(createEmployeeRequestDto.getPositionDescription())
-                .seniority(createEmployeeRequestDto.getPositionSeniority())
                 .build();
 
         Employee employee = Employee.builder()
