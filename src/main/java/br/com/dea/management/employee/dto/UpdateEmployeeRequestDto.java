@@ -33,5 +33,5 @@ public class UpdateEmployeeRequestDto {
     private EmployeeType employeeType;
 
     @NotNull(message = "Position could not be null")
-    private Position position;
+    private Long position;
 }

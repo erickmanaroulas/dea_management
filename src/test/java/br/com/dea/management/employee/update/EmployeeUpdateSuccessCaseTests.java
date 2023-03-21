@@ -52,22 +52,21 @@ class EmployeeUpdateSuccessCaseTests {
         employeeTestUtils.createFakeEmployees(1);
 
         Employee employee = employeeRepository.findAll().get(0);
-        Position positionTest = positionRepository.findAll().get(0);
-
         Position positionSut = Position.builder()
                 .description("resident developer")
                 .seniority("resident")
                 .build();
 
-        this.positionRepository.save(positionTest);
+        this.positionRepository.save(positionSut);
+        Long positionSutId = this.positionRepository.findAll().get(0).getId();
 
         String payload = "{" +
-                "\"name\": \"update\"," +
+                "\"name\": \"name\"," +
                 "\"email\": \"email@email.com\"," +
                 "\"linkedin\": \"linkedin\"," +
                 "\"password\": \"password\"," +
                 "\"employeeType\": \"RESIDENT\"," +
-                "\"position\": \"" + employee.getPosition().toString() + "\"" +
+                "\"position\": \"" + positionSutId + "\"" +
                 "}";
 
         mockMvc.perform(put("/employee/" + employee.getId())
@@ -82,6 +81,6 @@ class EmployeeUpdateSuccessCaseTests {
         assertThat(sut.getUser().getPassword()).isEqualTo("password");
         assertThat(sut.getEmployeeType()).isEqualTo(EmployeeType.RESIDENT);
 
-        assertThat(positionSut.getId()).isEqualTo(sut.getPosition());
+        assertThat(positionSutId).isEqualTo(sut.getPosition().getId());
     }
 }

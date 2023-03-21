@@ -1,5 +1,6 @@
 package br.com.dea.management.employee.create;
 
+import br.com.dea.management.employee.repository.EmployeeRepository;
 import br.com.dea.management.position.domain.Position;
 import br.com.dea.management.position.repository.PositionRepository;
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,9 @@ class EmployeeCreationPayloadValidationTests {
     @Autowired
     private PositionRepository positionRepository;
 
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
     public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
 
@@ -58,6 +62,7 @@ class EmployeeCreationPayloadValidationTests {
 
     @Test
     void whenPayloadHasInvalidPositionId_thenReturn404AndTheErrors() throws Exception {
+        this.employeeRepository.deleteAll();
         this.positionRepository.deleteAll();
 
         Position positionTest = Position.builder()
@@ -88,6 +93,7 @@ class EmployeeCreationPayloadValidationTests {
 
     @Test
     void whenPayloadHasInvalidEmail_thenReturn400AndTheErrors() throws Exception {
+        this.employeeRepository.deleteAll();
         this.positionRepository.deleteAll();
 
         Position positionTest = Position.builder()

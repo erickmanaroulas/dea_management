@@ -2,12 +2,14 @@ package br.com.dea.management.employee.service;
 
 import br.com.dea.management.employee.domain.Employee;
 import br.com.dea.management.employee.dto.CreateEmployeeRequestDto;
+import br.com.dea.management.employee.dto.UpdateEmployeeRequestDto;
 import br.com.dea.management.employee.repository.EmployeeRepository;
 import br.com.dea.management.exceptions.NotFoundException;
 import br.com.dea.management.position.domain.Position;
 import br.com.dea.management.position.repository.PositionRepository;
 import br.com.dea.management.student.domain.Student;
 import br.com.dea.management.student.dto.CreateStudentRequestDto;
+import br.com.dea.management.student.dto.UpdateStudentRequestDto;
 import br.com.dea.management.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -59,6 +61,25 @@ public class EmployeeService {
                 .position(position)
                 .employeeType(createEmployeeRequestDto.getEmployeeType())
                 .build();
+
+        return this.employeeRepository.save(employee);
+    }
+
+    public Employee updateEmployee(Long employeeId, UpdateEmployeeRequestDto updateEmployeeRequestDto) {
+        Position position = this.positionRepository.findById(updateEmployeeRequestDto.getPosition())
+                .orElseThrow(() -> new NotFoundException(Position.class, updateEmployeeRequestDto.getPosition()));
+
+        Employee employee = this.findEmployeeById(employeeId);
+        User user = employee.getUser();
+
+        user.setName(updateEmployeeRequestDto.getName());
+        user.setEmail(updateEmployeeRequestDto.getEmail());
+        user.setPassword(updateEmployeeRequestDto.getPassword());
+        user.setLinkedin(updateEmployeeRequestDto.getLinkedin());
+
+        employee.setUser(user);
+        employee.setEmployeeType(updateEmployeeRequestDto.getEmployeeType());
+        employee.setPosition(position);
 
         return this.employeeRepository.save(employee);
     }
