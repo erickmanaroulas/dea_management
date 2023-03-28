@@ -34,3 +34,16 @@ CREATE TABLE employee (
 	CONSTRAINT employee_FK FOREIGN KEY (user_id) REFERENCES dea_user(id) ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT employee_FK_1 FOREIGN KEY (position_id) REFERENCES `position`(id)
 );
+
+CREATE TABLE academy_class (
+    id int auto_increment NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    class_type ENUM("DEVELOPER", "DESIGN") NOT NULL,
+    instructor_id int NOT NULL,
+    CONSTRAINT academy_class_PK PRIMARY KEY (id),
+    CONSTRAINT academy_class_FK FOREIGN KEY (instructor_id) REFERENCES employee(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+ALTER TABLE student ADD academy_class_id INT NULL;
+ALTER TABLE student ADD CONSTRAINT student_FK_1 FOREIGN KEY (academy_class_id) REFERENCES academy_class(id) ON DELETE SET NULL ON UPDATE SET NULL;
