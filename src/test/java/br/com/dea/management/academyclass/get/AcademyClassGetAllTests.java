@@ -1,6 +1,6 @@
 package br.com.dea.management.academyclass.get;
 
-import br.com.dea.management.AcademyTestUtils;
+import br.com.dea.management.academyclass.AcademyClassTestUtils;
 import br.com.dea.management.academyclass.ClassType;
 import br.com.dea.management.academyclass.repository.AcademyClassRepository;
 import br.com.dea.management.position.repository.PositionRepository;
@@ -41,7 +41,7 @@ public class AcademyClassGetAllTests {
     private PositionRepository positionRepository;
 
     @Autowired
-    private AcademyTestUtils academyClassTestUtils;
+    private AcademyClassTestUtils academyClassTestUtils;
 
     @BeforeEach
     void beforeEach() {
@@ -56,7 +56,6 @@ public class AcademyClassGetAllTests {
     @Test
     void whenRequestingAcademyClassList_thenReturnListOfAcademyClassPaginatedSuccessfully() throws Exception {
         this.academyClassRepository.deleteAll();
-        this.positionRepository.deleteAll();
 
         LocalDate startDate = LocalDate.of(2023, Month.JANUARY, 1);
         LocalDate endDate = LocalDate.of(2024, Month.DECEMBER, 20);
@@ -69,7 +68,9 @@ public class AcademyClassGetAllTests {
                 .andExpect(jsonPath("$.content", hasSize(1)))
                 .andExpect(jsonPath("$.content[0].startDate", is("2023-01-01")))
                 .andExpect(jsonPath("$.content[0].endDate", is("2024-12-20")))
-                .andExpect(jsonPath("$.content[0].instructor.name", is("name 0")));
+                .andExpect(jsonPath("$.content[0].instructor.name", is("name 0")))
+                .andExpect(jsonPath("$.content[0].classType", is("DEVELOPER")));
+
 
     }
 

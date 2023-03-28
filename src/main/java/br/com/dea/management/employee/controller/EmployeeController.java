@@ -34,13 +34,13 @@ public class EmployeeController {
             @ApiResponse(responseCode = "500", description = "Error fetching employee list"),
     })
     @GetMapping({"/", ""})
-    public Page<EmployeeDto> getEmployees(@RequestParam(required = true) Integer page,
-                                          @RequestParam(required = true) Integer pageSize) {
+    public Page<EmployeeDto> getEmployees(@RequestParam() Integer page,
+                                          @RequestParam() Integer pageSize) {
 
         log.info(String.format("Fetching employees : page : %s : pageSize", page, pageSize));
 
         Page<Employee> employeesPaged = this.employeeService.findAllEmployeesPaginated(page, pageSize);
-        Page<EmployeeDto> employees = employeesPaged.map(employee -> EmployeeDto.fromEmployee(employee));
+        Page<EmployeeDto> employees = employeesPaged.map(EmployeeDto::fromEmployee);
 
         log.info(String.format("Employees loaded successfully : Employees : %s : pageSize", employees.getContent()));
 
@@ -80,7 +80,7 @@ public class EmployeeController {
 
         Employee employee = employeeService.createEmployee(createEmployeeRequestDto);
 
-        log.info(String.format("Student created successfully : id : %s", employee.getId()));
+        log.info(String.format("Employee created successfully : id : %s", employee.getId()));
     }
 
     @Operation(summary = "Update an Employee")

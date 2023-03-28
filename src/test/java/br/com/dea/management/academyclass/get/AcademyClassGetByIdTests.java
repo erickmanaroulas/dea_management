@@ -1,6 +1,6 @@
 package br.com.dea.management.academyclass.get;
 
-import br.com.dea.management.AcademyTestUtils;
+import br.com.dea.management.academyclass.AcademyClassTestUtils;
 import br.com.dea.management.academyclass.ClassType;
 import br.com.dea.management.academyclass.domain.AcademyClass;
 import br.com.dea.management.academyclass.repository.AcademyClassRepository;
@@ -46,7 +46,7 @@ public class AcademyClassGetByIdTests {
     private StudentRepository studentRepository;
 
     @Autowired
-    private AcademyTestUtils academyClassTestUtils;
+    private AcademyClassTestUtils academyClassTestUtils;
 
     @BeforeEach
     void beforeEach() {
@@ -75,8 +75,8 @@ public class AcademyClassGetByIdTests {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.startDate", is("2023-01-01")))
                 .andExpect(jsonPath("$.endDate", is("2024-12-20")))
-                .andExpect(jsonPath("$.instructor.name", is("name 0")));
-
+                .andExpect(jsonPath("$.instructor.name", is("name 0")))
+                .andExpect(jsonPath("$.classType", is("DEVELOPER")));
     }
 
     @Test
