@@ -8,8 +8,6 @@ import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
-@Table(name = "project")
-@NamedQuery(name = "findByName", query = "SELECT p FROM Project p where p.name = :name")
 @Getter
 @Setter
 @NoArgsConstructor
