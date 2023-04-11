@@ -4,6 +4,7 @@ import br.com.dea.management.employee.domain.Employee;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -23,10 +24,10 @@ public class Project {
     private String name;
 
     @Column
-    private Date startDate;
+    private LocalDate startDate;
 
     @Column
-    private Date endDate;
+    private LocalDate endDate;
 
     @Column
     private String client;
