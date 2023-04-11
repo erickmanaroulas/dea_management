@@ -15,7 +15,7 @@ CREATE TABLE student (
 	finish_date DATE NULL,
 	user_id INTEGER NOT NULL,
 	CONSTRAINT student_PK PRIMARY KEY (id),
-	CONSTRAINT student_FK FOREIGN KEY (user_id) REFERENCES dea_management.`user`(id) ON DELETE CASCADE ON UPDATE CASCADE
+	CONSTRAINT student_FK FOREIGN KEY (user_id) REFERENCES dea_user(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE `position` (
@@ -43,6 +43,20 @@ CREATE TABLE academy_class (
     instructor_id int NOT NULL,
     CONSTRAINT academy_class_PK PRIMARY KEY (id),
     CONSTRAINT academy_class_FK FOREIGN KEY (instructor_id) REFERENCES employee(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE project (
+    id int auto_increment NOT NULL,
+    name varchar(256) NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    client varchar(256) NOT NULL,
+    product_owner int NOT NULL,
+    scrum_master int NOT NULL,
+    external_product_manager varchar(256) NOT NULL,
+    CONSTRAINT project_PK PRIMARY KEY (id),
+    CONSTRAINT project_FK FOREIGN KEY (product_owner) REFERENCES employee(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT project_FK_1 FOREIGN KEY (scrum_master) REFERENCES employee(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 ALTER TABLE student ADD academy_class_id INT NULL;
