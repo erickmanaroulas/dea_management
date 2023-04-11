@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProjectRepository extends JpaRepository<Employee, Long> {
+public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     @Query("SELECT p FROM Project p")
     public Page<Project> findAllPaginated(Pageable pageable);
