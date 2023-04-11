@@ -1,12 +1,12 @@
-package br.com.dea.management.academyclass.delete;
+package br.com.dea.management.project.delete;
 
 import br.com.dea.management.academyclass.AcademyClassTestUtils;
 import br.com.dea.management.academyclass.ClassType;
 import br.com.dea.management.academyclass.domain.AcademyClass;
 import br.com.dea.management.academyclass.repository.AcademyClassRepository;
-import br.com.dea.management.employee.EmployeeTestUtils;
-import br.com.dea.management.employee.domain.Employee;
-import br.com.dea.management.employee.repository.EmployeeRepository;
+import br.com.dea.management.project.ProjectTestUtils;
+import br.com.dea.management.project.domain.Project;
+import br.com.dea.management.project.repository.ProjectRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.Month;
@@ -32,44 +31,42 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-class AcademyClassDeleteTests {
+class ProjectDeleteTests {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private AcademyClassRepository academyClassRepository;
+    private ProjectRepository projectRepository;
 
     @Autowired
-    private AcademyClassTestUtils academyClassTestUtils;
+    private ProjectTestUtils projectTestUtils;
 
     public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(), StandardCharsets.UTF_8);
 
     @Test
-    void whenRequestingToRemoveAcademyClass_thenRemoveAStudentSuccessfully() throws Exception {
-        this.academyClassRepository.deleteAll();
+    void whenRequestingToRemoveProject_thenRemoveProjectSuccessfully() throws Exception {
+        this.projectRepository.deleteAll();
 
-        LocalDate startDate = LocalDate.of(2023, Month.JANUARY, 1);
-        LocalDate endDate = LocalDate.of(2024, Month.DECEMBER, 20);
-        this.academyClassTestUtils.createFakeClass(1, startDate, endDate, ClassType.DEVELOPER);
+        this.projectTestUtils.createFakeProjects(1);
 
-        AcademyClass academyClass = this.academyClassRepository.findAll().get(0);
+        Project project = this.projectRepository.findAll().get(0);
 
-        mockMvc.perform(delete("/academy-class/" + academyClass.getId())
+        mockMvc.perform(delete("/project/" + project.getId())
                         .contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
 
-        List<AcademyClass> classes = this.academyClassRepository.findAll();
+        List<Project> projects = this.projectRepository.findAll();
 
-        assertThat(classes.size()).isEqualTo(0);
+        assertThat(projects.size()).isEqualTo(0);
     }
 
     @Test
-    void whenRemovingAnAcademyClassThatDoesNotExists_thenReturn404() throws Exception {
-        this.academyClassRepository.deleteAll();
+    void whenRemovingAProjectThatDoesNotExists_thenReturn404() throws Exception {
+        this.projectRepository.deleteAll();
 
-        mockMvc.perform(delete("/academy-class/1")
+        mockMvc.perform(delete("/project/1")
                         .contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
