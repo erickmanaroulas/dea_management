@@ -24,7 +24,7 @@ public class ProjectTestUtils {
 
     public void createFakeProjects(int amount) {
 
-        this.employeeTestUtils.createFakeEmployees(2);
+        this.employeeTestUtils.createFakeEmployees(amount * 2);
 
         Employee productOwner = this.employeeRepository.findAll().get(0);
         Employee scrumMaster = this.employeeRepository.findAll().get(1);

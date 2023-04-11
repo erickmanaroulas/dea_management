@@ -93,7 +93,7 @@ public class ProjectGetByIdTests {
     }
 
     @Test
-    void whenRequestingAnNonExistentAcademyClassById_thenReturnTheNotFoundError() throws Exception {
+    void whenRequestingAnNonExistentProjectById_thenReturnTheNotFoundError() throws Exception {
 
         mockMvc.perform(get("/project/5000"))
                 .andExpect(status().isNotFound())
