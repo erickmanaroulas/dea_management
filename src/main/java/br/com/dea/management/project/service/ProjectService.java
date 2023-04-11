@@ -46,6 +46,7 @@ public class ProjectService {
                 .name(createProjectRequestDto.getName())
                 .startDate(createProjectRequestDto.getStartDate())
                 .endDate(createProjectRequestDto.getEndDate())
+                .client(createProjectRequestDto.getClient())
                 .productOwner(productOwner)
                 .scrumMaster(scrumMaster)
                 .externalProductManager(createProjectRequestDto.getExternalProductManager())
