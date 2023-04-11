@@ -37,6 +37,7 @@ public class ProjectDto {
         projectDto.setName(project.getName());
         projectDto.setStartDate(project.getStartDate());
         projectDto.setEndDate(project.getEndDate());
+        projectDto.setClient(project.getClient());
         projectDto.setProductOwner(EmployeeDto.fromEmployee(project.getProductOwner()));
         projectDto.setScrumMaster(EmployeeDto.fromEmployee(project.getScrumMaster()));
         projectDto.setExternalProductManager(project.getExternalProductManager());
