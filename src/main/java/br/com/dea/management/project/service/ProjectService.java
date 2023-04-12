@@ -68,6 +68,7 @@ public class ProjectService {
         project.setName(updateProjectRequestDto.getName());
         project.setStartDate(updateProjectRequestDto.getStartDate());
         project.setEndDate(updateProjectRequestDto.getEndDate());
+        project.setClient(updateProjectRequestDto.getClient());
         project.setProductOwner(productOwner);
         project.setScrumMaster(scrumMaster);
         project.setExternalProductManager(updateProjectRequestDto.getExternalProductManager());
